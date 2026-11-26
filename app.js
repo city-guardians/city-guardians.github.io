@@ -487,17 +487,27 @@ function render() {
 function introOverlay() {
   if (window.__introDone) return; window.__introDone = true;
   var ov = document.createElement('div'); ov.id = 'introov'; ov.setAttribute('dir', 'rtl');
-  ov.innerHTML = '<video playsinline webkit-playsinline preload="auto" src="/assets/intro-open.mp4"></video><button type="button" class="intro-skip">تخطّي ›</button><button type="button" class="intro-snd" hidden><span>🔊</span>اضغط للصوت</button>';
+  ov.innerHTML = '<video playsinline webkit-playsinline preload="auto"></video><button type="button" class="intro-skip">تخطّي ›</button><button type="button" class="intro-snd" hidden><span>🔊</span>اضغط للصوت</button>';
   document.body.appendChild(ov); document.documentElement.classList.add('intro-on');
   var v = ov.querySelector('video'), skip = ov.querySelector('.intro-skip'), snd = ov.querySelector('.intro-snd'), done = false, started = false;
   function finish() { if (done) return; done = true; try { v.pause(); } catch (e) {} ov.classList.add('out'); document.documentElement.classList.remove('intro-on'); setTimeout(function () { if (ov.parentNode) ov.remove(); }, 450); }
   skip.onclick = finish; v.addEventListener('ended', finish); v.addEventListener('error', finish);
   v.addEventListener('playing', function () { started = true; });
   snd.onclick = function () { v.muted = false; v.volume = 1; snd.hidden = true; var p = v.play(); if (p && p.catch) p.catch(function () {}); };
-  setTimeout(function () { if (!started) finish(); }, 8000);
-  v.muted = false; v.volume = 1;
-  var p = v.play();
-  if (p && p.catch) p.catch(function () { if (done) return; v.muted = true; var q = v.play(); snd.hidden = false; if (q && q.catch) q.catch(function () { finish(); }); });
+  setTimeout(function () { if (!started) finish(); }, 10000);
+  var NCH = 8, parts = [], got = 0;
+  function begin() {
+    if (done) return;
+    var bin = atob(parts.join('')), u = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i);
+    v.src = URL.createObjectURL(new Blob([u], { type: 'video/mp4' }));
+    v.muted = false; v.volume = 1;
+    var p = v.play();
+    if (p && p.catch) p.catch(function () { if (done) return; v.muted = true; var q = v.play(); snd.hidden = false; if (q && q.catch) q.catch(function () { finish(); }); });
+  }
+  for (var k = 0; k < NCH; k++) (function (k) {
+    fetch('/assets/iv/c' + k + '.txt').then(function (r) { if (!r.ok) throw 0; return r.text(); }).then(function (t) { parts[k] = t.trim(); if (++got === NCH) begin(); }).catch(finish);
+  })(k);
 }
 try { introOverlay(); } catch (e) { document.documentElement.classList.remove('intro-on'); }
 
