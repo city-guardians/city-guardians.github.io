@@ -23,8 +23,8 @@ var stories = [
     q: 'تيمو جري بسرعة أوي... ووقف فين؟', a: ['في البحر', 'عند الأهرامات', 'فوق القمر'], ok: 1 },
   { n: 3, t: 'نونو ضد تنين اللهب', b: 'تنين نار بيولّع الغابة والحيوانات في خطر... بس هو ليه زعلان كده؟', note: 'مش كل وحش شرير!', word: 'سبلاش!', c: BLUE, hero: 'nono', hname: 'نونو',
     q: 'التنين كان زعلان ليه؟', a: ['كان جعان', 'كان بردان', 'حد سرق بيضته'], ok: 2 },
-  { n: 4, t: 'حموزة وجيش الأسمنت', b: 'البارون رمادي عايز يحوّل الجناين أسمنت... وخطف نونو كمان!', note: 'الكبير بيحمي الصغير', word: 'فوووش!', c: GRN, hero: 'hamoza', hname: 'حموزة',
-    q: 'حموزة أنقذ مين من القفص؟', a: ['أخوه نونو', 'قطة صغيرة', 'تيمو'], ok: 0 },
+  { n: 4, t: 'حموزي وجيش الأسمنت', b: 'البارون رمادي عايز يحوّل الجناين أسمنت... وخطف نونو كمان!', note: 'الكبير بيحمي الصغير', word: 'فوووش!', c: GRN, hero: 'hamoza', hname: 'حموزي',
+    q: 'حموزي أنقذ مين من القفص؟', a: ['أخوه نونو', 'قطة صغيرة', 'تيمو'], ok: 0 },
   { n: 5, t: 'الخارقون: انتقام الأشرار', b: 'الأشرار اتحالفوا مع بعض... والخارقين لازم يتجمعوا لأول مرة!', note: 'القصة الكبيرة!', word: 'كراش!', c: ORG, hero: 'hamoza', hname: 'الفريق',
     q: 'مين جه يساعد الخارقين في الآخر؟', a: ['دكتور صقيع', 'تنين اللهب', 'البارون رمادي'], ok: 1 }
 ];
@@ -32,7 +32,7 @@ var heroes = [
   { k: 'sino', n: 'سوبر سينو', age: 'سنتين', pw: 'بيطير وأقوى من أي حاجة', say: 'صغنن... بس قوي!', c: RED },
   { k: 'timo', n: 'تيمو البرق', age: '٣ سنين ونص', pw: 'أسرع من البرق', say: 'محدش يقدر يسبقني!', c: '#f2a20c' },
   { k: 'nono', n: 'نونو', age: '٤ سنين', pw: 'بيتحكم في المايه', say: 'يا موج... تعالى معايا!', c: BLUE },
-  { k: 'hamoza', n: 'حموزة الأخضر', age: '٩ سنين', pw: 'بيكبّر الشجر — قائد الفريق', say: 'يلا يا خارقين!', c: GRN }
+  { k: 'hamoza', n: 'حموزي الأخضر', age: '٩ سنين', pw: 'بيتحكم في الطبيعة — قائد الفريق', say: 'يلا يا خارقين!', c: GRN }
 ];
 var villains = [
   { n: 'ميجا-بوت', img: 'v1', pw: 'ضخم وأقوى من مية عربية', weak: 'الشريحة الحمرا على ضهره', by: 'سوبر سينو', st: 'بقى صاحبنا!', g: 1, rot: -2 },
@@ -177,7 +177,7 @@ function homeHTML() {
       '<p class="vrow"><span>القوة:</span> ' + v.pw + '</p><p class="vrow"><span>نقطة الضعف:</span> ' + v.weak + '</p><p class="vrow"><span>غلبه:</span> ' + v.by + '</p></article>';
   }).join('');
   var sw = [RED, BLUE, GRN, YEL, ORG, INK].map(function (c) { return '<button type="button" data-suit="' + c + '" style="background:' + c + '" aria-label="لون البدلة"></button>'; }).join('');
-  var pws = ['⚡ البرق', '💧 المايه', '🌳 الشجر', '⭐ النجوم', '🔥 النار'].map(function (p, i) { return '<button type="button" class="btn sm cream" data-pw="' + i + '">' + p + '</button>'; }).join('');
+  var pws = ['⚡ البرق', '💧 المايه', '🌿 الطبيعة', '⭐ النجوم', '🔥 النار'].map(function (p, i) { return '<button type="button" class="btn sm cream" data-pw="' + i + '">' + p + '</button>'; }).join('');
   var designer = '<div class="designer paper tape"><div class="dview"><div id="dsvg"></div><div class="dline" id="dline"></div></div><div class="dctl"><h4>لون البدلة</h4><div class="sw">' + sw + '</div><h4>القوة</h4><div class="pw">' + pws + '</div><h4>اسم البطل</h4><input class="field" id="dname" maxlength="18" placeholder="اكتب الاسم" autocomplete="off"><div class="row" style="margin-top:16px"><button type="button" class="btn big" id="dsave">حفظ البطل</button></div></div></div>';
   var thumbs = heroes.map(function (h, i) { return '<button type="button" data-ch="' + h.k + '" aria-label="' + h.n + '"><img src="' + H(h.k) + '" alt=""></button>'; }).join('');
   var crayons = ['#d7261e', '#f07c12', '#ffcc1a', '#2e9e3e', '#7ed38a', '#2a7fd4', '#8fcbf5', '#b5651d', '#f2b8c6', '#8a8a8a', '#ffe0bd', '#1b1712'].map(function (c) { return '<button type="button" data-cr="' + c + '" style="background:' + c + '" aria-label="لون"></button>'; }).join('');
@@ -198,7 +198,7 @@ function homeHTML() {
     sec('drawings', 'رسومات الأبطال', GRN, 'ارسم بطلك أو شريرك على ورقة، صوّرها... وعلّقها هنا!', drawings) +
     sec('intro', 'الإنترو!', RED, '', video) +
     sec('six', 'قريبًا', YEL, '', six) +
-    '<footer class="foot">إهداء لأبطال بيتنا الحقيقيين:<br>سينو، تيمو، نونو، وحموزة<small>موسيقى الإنترو: Black Vortex - Kevin MacLeod (incompetech.com) - CC BY 3.0</small>' + ios + '</footer>';
+    '<footer class="foot">إهداء لأبطال بيتنا الحقيقيين:<br>سينو، تيمو، نونو، وحموزي<small>موسيقى الإنترو: Black Vortex - Kevin MacLeod (incompetech.com) - CC BY 3.0</small>' + ios + '</footer>';
 }
 
 /* ---------- certificate ---------- */
@@ -236,7 +236,7 @@ function refreshAlbum(fresh) {
 }
 
 /* ---------- hero designer ---------- */
-var POW = ['⚡', '💧', '🌳', '⭐', '🔥'], POWN = ['البرق', 'المايه', 'الشجر', 'النجوم', 'النار'];
+var POW = ['⚡', '💧', '🌿', '⭐', '🔥'], POWN = ['البرق', 'المايه', 'الطبيعة', 'النجوم', 'النار'];
 function heroSVG(suit, pw) {
   var dark = suit === INK;
   var cape = dark ? '#6b1511' : RED; if (suit === RED) cape = '#8d1611';
