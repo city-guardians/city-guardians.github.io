@@ -85,9 +85,9 @@ h1, h2, h3, .ttl, .lalezar { font-family: 'Lalezar', 'Cairo', sans-serif; font-w
 .cert h3 { font-size: 38px; color: var(--red); }
 .cert p { font: 700 22px/1.7 'Aref Ruqaa', serif; }
 .cert input { display: block; margin: 8px auto; width: min(100%, 360px); font: 700 34px 'Aref Ruqaa', serif; text-align: center; border: 0; border-bottom: 3px dashed var(--ink); background: transparent; color: var(--blue); min-height: 54px; }
-.seal { width: 118px; height: 118px; margin: 10px auto; display: flex; align-items: center; justify-content: center; position: relative; }
-.seal::before { content: ''; position: absolute; inset: 0; background: var(--yellow); clip-path: polygon(50% 0, 61% 10%, 75% 4%, 79% 18%, 93% 21%, 89% 35%, 100% 46%, 90% 57%, 96% 71%, 82% 75%, 79% 90%, 65% 87%, 55% 100%, 45% 88%, 31% 96%, 26% 82%, 10% 80%, 14% 66%, 2% 55%, 12% 44%, 5% 30%, 19% 26%, 21% 11%, 36% 14%); filter: drop-shadow(2px 2px 0 var(--ink)); }
-.seal b { position: relative; font: 400 22px/1.1 'Lalezar', sans-serif; transform: rotate(-10deg); }
+.cglogo { width: fit-content; margin: 14px auto 8px; display: flex; align-items: stretch; background: var(--ink); padding: 12px 16px; box-shadow: 4px 4px 0 rgba(27,23,18,.25); transform: rotate(-1.2deg); }
+.cglogo-w { display: flex; align-items: center; font: 400 46px/1.15 'Lalezar', sans-serif; color: #fff; border-top: 3px solid #fff; border-bottom: 3px solid #fff; padding: 0 6px; }
+.cglogo-b { display: flex; align-items: center; font: 400 26px/1.15 'Lalezar', sans-serif; color: #fff; background: var(--red); padding: 0 10px; margin-inline-start: 12px; }
 
 /* heroes */
 .heroes { display: grid; gap: 150px 22px; grid-template-columns: 1fr; padding-top: 150px; max-width: 420px; margin: 0 auto; }
