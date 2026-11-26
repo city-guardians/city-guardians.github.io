@@ -2,7 +2,7 @@
 (function () {
   'use strict';
   var APP_ID = '672ac5ba-6e9a-487d-836e-00e88f8c5576';
-  var PRIMARY = 'agamal92-instinct.github.io';
+  var PRIMARY = 'city-guardians.github.io';
   var SAFARI_ID = 'web.onesignal.auto.6b1e0125-c07a-4d4d-8123-db80df1063df';
   var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
   var standalone = window.navigator.standalone === true || (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
