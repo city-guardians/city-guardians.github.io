@@ -104,6 +104,15 @@ function showImage(dataUrl, name, msg) {
 }
 function fontsReady() { try { return Promise.all([document.fonts.load('40px Lalezar', 'الخارقون'), document.fonts.load('700 30px "Aref Ruqaa"', 'شهادة'), document.fonts.load('700 20px Cairo', 'ا')]); } catch (e) { return Promise.resolve(); } }
 
+/* retry images that fail on a flaky network (once, then twice more with a cache-bust) */
+document.addEventListener('error', function (e) {
+  var im = e.target; if (!im || im.tagName !== 'IMG' || !im.src || im.src.indexOf('data:') === 0) return;
+  var n = +(im.getAttribute('data-rt') || 0); if (n >= 3) return;
+  im.setAttribute('data-rt', n + 1);
+  var base = im.src.split('?')[0];
+  setTimeout(function () { im.src = base + '?r=' + Date.now(); }, 800 * (n + 1));
+}, true);
+
 /* ---------- state ---------- */
 var state = {
   stickers: store.get('stickers', []),
@@ -205,7 +214,7 @@ function homeHTML() {
 function renderCert() {
   var box = $('#certbox'); if (!box) return;
   if (state.stickers.length < 5) { box.innerHTML = ''; return; }
-  box.innerHTML = '<div class="cert tape"><div class="cert-in"><h3>شهادة رسمية</h3><p>نشهد إن البطل</p><input id="cname" maxlength="20" placeholder="اكتب اسمك" value="' + esc(state.name) + '" autocomplete="off"><p>بقى عضو رسمي في حراس المدينة!</p><div class="seal"><b>حراس<br>المدينة</b></div><button type="button" class="btn big" id="csave">حفظ الشهادة</button></div></div>';
+  box.innerHTML = '<div class="cert tape"><div class="cert-in"><h3>شهادة رسمية</h3><p>نشهد إن البطل</p><input id="cname" maxlength="20" placeholder="اكتب اسمك" value="' + esc(state.name) + '" autocomplete="off"><p>بقى عضو رسمي في حراس المدينة!</p><div class="cglogo"><span class="cglogo-w">حراس</span><span class="cglogo-b">المدينة</span></div><button type="button" class="btn big" id="csave">حفظ الشهادة</button></div></div>';
   $('#cname').oninput = function (e) { state.name = e.target.value; save('name'); };
   $('#csave').onclick = function () {
     fontsReady().then(function () {
@@ -217,9 +226,16 @@ function renderCert() {
       x.fillStyle = BLUE; x.font = '700 76px "Aref Ruqaa"'; x.fillText(state.name || '..............', 500, 340);
       x.strokeStyle = INK; x.setLineDash([10, 8]); x.lineWidth = 3; x.beginPath(); x.moveTo(250, 362); x.lineTo(750, 362); x.stroke(); x.setLineDash([]);
       x.fillStyle = INK; x.font = '700 44px "Aref Ruqaa"'; x.fillText('بقى عضو رسمي في حراس المدينة!', 500, 450);
-      x.save(); x.translate(500, 560); x.rotate(-0.17); x.fillStyle = YEL; x.strokeStyle = INK; x.lineWidth = 5; x.beginPath();
-      for (var i = 0; i < 24; i++) { var r = i % 2 ? 62 : 84, a = i * Math.PI / 12; x.lineTo(Math.cos(a) * r, Math.sin(a) * r); } x.closePath(); x.fill(); x.stroke();
-      x.fillStyle = INK; x.font = '34px Lalezar'; x.fillText('حراس', 0, -2); x.fillText('المدينة', 0, 34); x.restore();
+      x.save(); x.translate(500, 562); x.rotate(-0.05);
+      x.fillStyle = INK; x.fillRect(-252, -62, 504, 124);
+      x.direction = 'rtl'; x.textAlign = 'center'; x.fillStyle = '#fff'; x.font = '86px Lalezar';
+      var hw = x.measureText('حراس').width, hx = 82;
+      x.fillText('حراس', hx, 32);
+      x.fillRect(hx - hw / 2 - 16, -50, hw + 32, 6); x.fillRect(hx - hw / 2 - 16, 46, hw + 32, 6);
+      x.font = '48px Lalezar'; var mw = x.measureText('المدينة').width, bw = mw + 34, bx = -222;
+      x.fillStyle = RED; x.fillRect(bx, -42, bw, 84);
+      x.fillStyle = '#fff'; x.fillText('المدينة', bx + bw / 2, 20);
+      x.restore();
       showImage(c.toDataURL('image/png'), 'شهادة-حراس-المدينة.png');
     });
   };
