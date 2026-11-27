@@ -26,8 +26,42 @@ var stories = [
   { n: 4, t: 'حموزي وجيش الأسمنت', b: 'البارون رمادي عايز يحوّل الجناين أسمنت... وخطف نونو كمان!', note: 'الكبير بيحمي الصغير', word: 'فوووش!', c: GRN, hero: 'hamoza', hname: 'حموزي',
     q: 'حموزي أنقذ مين من القفص؟', a: ['أخوه نونو', 'قطة صغيرة', 'تيمو'], ok: 0 },
   { n: 5, t: 'الخارقون: انتقام الأشرار', b: 'الأشرار اتحالفوا مع بعض... والخارقين لازم يتجمعوا لأول مرة!', note: 'القصة الكبيرة!', word: 'كراش!', c: ORG, hero: 'hamoza', hname: 'الفريق',
-    q: 'مين جه يساعد الخارقين في الآخر؟', a: ['دكتور صقيع', 'تنين اللهب', 'البارون رمادي'], ok: 1 }
+    q: 'مين جه يساعد الخارقين في الآخر؟', a: ['دكتور صقيع', 'تنين اللهب', 'البارون رمادي'], ok: 1 },
+  { n: 6, t: 'سينو ومستر مغناطيس', b: 'مستر مغناطيس خطف كل حديد المدينة: العربيات والعجل والحلل! بس سينو عنده فكرة أذكى من أي مغناطيس.', note: 'القوة مع الفكرة أحسن!', word: 'دووووينج!', c: RED, hero: 'sino', hname: 'سوبر سينو',
+    q: 'إيه اللي غلّب مستر مغناطيس في الآخر؟', a: ['قوة سينو لوحدها', 'فكرة سينو الذكية', 'البوليس'], ok: 1 },
+  { n: 7, t: 'سينو وبيضة الديناصور', b: 'بيضة غريبة فقست في المتحف وطلع منها ديناصور بيبي... وسينو مش هيستريح قبل ما يرجّعه لمامته!', note: 'الصغير محتاج حد يحميه!', word: 'كرااك!', c: RED, hero: 'sino', hname: 'سوبر سينو',
+    q: 'دينو البيبي طلع منين؟', a: ['من بيضة في المتحف', 'من الغابة', 'من البحر'], ok: 0 },
+  { n: 8, t: 'سينو والقمر المسروق', b: 'ملكة الفقاعات بلعت القمر في فقاعة وطارت بيه! سينو لازم يرجّعه للسما قبل ما الضلمة تخوّف الأطفال.', note: 'الحاجة الحلوة لما نشاركها!', word: 'بلوووب!', c: RED, hero: 'sino', hname: 'سوبر سينو',
+    q: 'ملكة الفقاعات سرقت القمر ازاي؟', a: ['بالشبكة', 'بالسحر', 'في فقاعة عمالقة'], ok: 2 },
+  { n: 9, t: 'سينو من غير قوة', b: 'سينو عنده برد وقوته طارت... بس كلب صغير عالق في منطاد طاير، والبطل مش بيستسلم أبدًا!', note: 'الشجاعة قوة برضه!', word: 'هاااتشووو!', c: RED, hero: 'sino', hname: 'سوبر سينو',
+    q: 'سينو أنقذ الكلب وهو إيه؟', a: ['بكامل قوته', 'عيان ومن غير قوته', 'نايم'], ok: 1 },
+  { n: 10, t: 'تيمو ضد كابتن ضباب', b: 'ضباب تقيل غطّى المدينة وأتوبيس المدرسة تايه... تيمو البرق هينوّر الطريق بشرارته!', note: 'استنى صحابك يا بطل!', word: 'وووووووش!', c: '#f2a20c', hero: 'timo', hname: 'تيمو',
+    q: 'تيمو نوّر الطريق لمين؟', a: ['لأتوبيس المدرسة التايه', 'للقطار', 'لعربية إسعاف'], ok: 0 },
+  { n: 11, t: 'نونو وقراصنة البحر', b: 'القبطان شنب بيوسّخ البحر والسلاحف زعلانة... نونو بطل المايه جاي ينضّف كل حاجة!', note: 'البحر بيتنا كلنا!', word: 'سبالااش!', c: BLUE, hero: 'nono', hname: 'نونو',
+    q: 'القبطان شنب كان بيرمي إيه في البحر؟', a: ['سمك', 'كنوز', 'أكياس زبالة'], ok: 2 },
+  { n: 12, t: 'حموزي وملك الرمل', b: 'ملك الرمل عايز يحوّل كل حاجة صحرا... وحموزي الأخضر هيوقّفه بالشجر والنخل!', note: 'ازرع شجرة... تحمي الدنيا!', word: 'فوووووو!', c: GRN, hero: 'hamoza', hname: 'حموزي',
+    q: 'حموزي حمى القرية من إيه؟', a: ['عاصفة رمل', 'موجة كبيرة', 'بركان'], ok: 0 },
+  { n: 13, t: 'الخارقون وجيش اللعب', b: 'بالليل في المول اللعب صحيت وبقت جيش! الخارقون الأربعة ضد عم زمبلك ولعبه العمالقة.', note: 'اللعبة صاحبتنا دايمًا!', word: 'تيك تاك! تيك تاك!', c: ORG, hero: 'hamoza', hname: 'الفريق',
+    q: 'مين اللي صحّى اللعب في المول؟', a: ['مستر مغناطيس', 'عم زمبلك', 'البارون'], ok: 1 },
+  { n: 14, t: 'الخارقون والضيف الفضائي', b: 'سفينة فضاء نزلت في الجنينة وطلع منها ضيف صغير تلات عيون... الخارقون هيساعدوه يرجع لأهله!', note: 'مش لازم يشبهنا!', word: 'بوووووم!', c: ORG, hero: 'hamoza', hname: 'الفريق',
+    q: 'بيبو جه منين؟', a: ['من البحر', 'من الغابة', 'من الفضاء'], ok: 2 },
+  { n: 15, t: 'الخارقون: اختبار القائد', b: 'الأشرار اتجمعوا ومسكوا حموزي القائد... دلوقتي دور التلاتة الصغيرين يثبتوا إن القائد قلب وفكرة!', note: 'القائد عنده فكرة وقلب!', word: 'تشاااك!', c: ORG, hero: 'hamoza', hname: 'الفريق',
+    q: 'مين اللي أنقذ حموزي القائد؟', a: ['التلاتة الصغيرين لوحدهم', 'البارون', 'الشرطة'], ok: 0 }
 ];
+var CHARS = {
+  sino: { n: 'سوبر سينو', img: 'sino' }, timo: { n: 'تيمو', img: 'timo' }, nono: { n: 'نونو', img: 'nono' }, hamoza: { n: 'حموزي', img: 'hamoza' },
+  mega: { n: 'ميجا-بوت' }, frost: { n: 'دكتور صقيع' }, dragon: { n: 'تنين اللهب' }, baron: { n: 'البارون رمادي' },
+  magnet: { n: 'مستر مغناطيس' }, bubble: { n: 'ملكة الفقاعات' }, fog: { n: 'كابتن ضباب' }, dino: { n: 'دينو' }, dinomama: { n: 'ماما ديناصور' }, puppy: { n: 'الكلب الصغير' },
+  driver: { n: 'سواق الأتوبيس' }, kids: { n: 'أطفال المدرسة' }, shanab: { n: 'القبطان شنب' }, pirates: { n: 'القراصنة والببغاء' }, dolphin: { n: 'الدلفين' }, turtles: { n: 'السلاحف' },
+  sandking: { n: 'ملك الرمل' }, girl: { n: 'بنت القرية' }, zemblek: { n: 'عم زمبلك' }, toys: { n: 'جيش اللعب' }, bibo: { n: 'بيبو' }, biboFam: { n: 'أهل بيبو' }
+  /* only the 4 heroes get filter chips; other names are searchable via the search box */
+};
+var TEAM = ['sino', 'timo', 'nono', 'hamoza'];
+var STORY_CHARS = { 1: ['sino', 'mega'], 2: ['timo', 'frost'], 3: ['nono', 'dragon'], 4: ['hamoza', 'nono', 'baron'], 5: TEAM.concat(['baron', 'frost', 'dragon']),
+  6: ['sino', 'magnet'], 7: ['sino', 'dino', 'dinomama'], 8: ['sino', 'bubble'], 9: TEAM.concat(['puppy']), 10: ['timo', 'fog', 'driver', 'kids'], 11: ['nono', 'shanab', 'pirates', 'dolphin', 'turtles'],
+  12: ['hamoza', 'sandking', 'girl'], 13: TEAM.concat(['zemblek', 'toys']), 14: TEAM.concat(['bibo', 'biboFam']), 15: TEAM.concat(['baron', 'frost', 'magnet']) };
+stories.forEach(function (s) { s.chars = s.chars || STORY_CHARS[s.n] || []; });
+var normAr = function (s) { return String(s || '').toLowerCase().replace(/[\u064B-\u0652\u0640]/g, '').replace(/[أإآ]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه').replace(/[-\s]+/g, ' ').trim(); };
 var heroes = [
   { k: 'sino', n: 'سوبر سينو', age: 'سنتين', pw: 'بيطير وأقوى من أي حاجة', say: 'صغنن... بس قوي!', c: RED },
   { k: 'timo', n: 'تيمو البرق', age: '٣ سنين ونص', pw: 'أسرع من البرق', say: 'محدش يقدر يسبقني!', c: '#f2a20c' },
@@ -152,7 +186,7 @@ document.addEventListener('click', function (e) {
   if (e.metaKey || e.ctrlKey || e.shiftKey || e.button > 0) return;
   e.preventDefault();
   var info = null, u = a.getAttribute('href');
-  var m = /^\/story-(\d)$/.exec(u);
+  var m = /^\/story-(\d+)$/.exec(u);
   if (m) { var s = stories[+m[1] - 1]; info = { c: s.c, word: s.word, cap: 'العدد ' + ar(s.n) + ': ' + s.t }; }
   else if (u === '/') info = { c: YEL, word: 'بووووم!', cap: 'الخارقون — حراس المدينة' };
   var x = e.clientX || innerWidth / 2, y = e.clientY || innerHeight / 2;
@@ -166,18 +200,21 @@ function homeHTML() {
   var posters = '';
   var all = []; for (var n = 1; n <= 5; n++) for (var i = 1; i <= 6; i++) all.push(T(n, i));
   var spots = [[2, 4, -7], [30, 1, 5], [60, 5, -4], [80, 2, 8], [6, 34, 6], [84, 38, -6], [4, 66, -8], [30, 76, 4], [64, 79, -5], [86, 70, 7], [46, 88, 3], [18, 52, -3]];
-  spots.forEach(function (s, k) { posters += '<div class="poster" style="left:' + s[0] + '%;top:' + s[1] + '%;--r:' + s[2] + 'deg;animation-delay:-' + (k * 0.7) + 's;transform:rotate(' + s[2] + 'deg)"><img src="' + all[(k * 5 + 3) % 30] + '" alt="" width="120" height="170"' + (k > 3 ? ' loading="lazy"' : '') + ' decoding="async"></div>'; });
+  spots.forEach(function (s, k) { posters += '<div class="poster" style="left:' + s[0] + '%;top:' + s[1] + '%;--r:' + s[2] + 'deg;animation-delay:-' + (k * 0.7) + 's;transform:rotate(' + s[2] + 'deg)"><img src="' + all[(k * 5 + 3) % all.length] + '" alt="" width="120" height="170"' + (k > 3 ? ' loading="lazy"' : '') + ' decoding="async"></div>'; });
   var s = stories[state.last - 1];
-  var hero = '<header class="hero corkboard">' + posters + '<div class="hcard"><h1>الخارقون</h1><div class="torn">حراس المدينة</div><p class="tag">٤ أبطال صغيرين... و٥ مغامرات أكشن. اختار قصتك وابدأ!</p><div class="hbtns">' +
+  var hero = '<header class="hero corkboard">' + posters + '<div class="hcard"><h1>الخارقون</h1><div class="torn">حراس المدينة</div><p class="tag">٤ أبطال صغيرين... و' + ar(stories.length) + ' مغامرة أكشن. اختار قصتك وابدأ!</p><div class="hbtns">' +
     '<a class="btn big" data-go href="/story-' + s.n + '">ابدأ القراءة ⚡</a><button type="button" class="btn cream" data-scroll="index">الفهرس</button><button type="button" class="btn cream" data-scroll="album">الستيكرات</button><button type="button" class="btn cream" data-scroll="color">لوّن</button></div></div></header>';
   var cards = stories.map(function (s, i) {
-    return '<article class="card" style="--c:' + s.c + ';--rot:' + [-2.4, 1.8, -1.2, 2.3, -1.9][i] + 'deg"><div class="cover" data-pop><img src="' + P(s.n, 1) + '" alt="غلاف العدد ' + ar(s.n) + ': ' + s.t + '" width="800" height="1135" loading="' + (i < 2 ? 'eager' : 'lazy') + '" decoding="async"><span class="word">' + s.word + '</span><span class="starburst"><b>العدد ' + ar(s.n) + '</b></span><span class="stamp-done' + (state.stickers.indexOf(s.n) >= 0 ? ' on' : '') + '">خلّصتها!</span></div>' +
+    return '<article class="card" data-chars="' + s.chars.join(' ') + '" data-q="' + esc(normAr(s.t + ' ' + s.chars.map(function (k) { return CHARS[k].n; }).join(' '))) + '" style="--c:' + s.c + ';--rot:' + [-2.4, 1.8, -1.2, 2.3, -1.9][i % 5] + 'deg"><div class="cover" data-pop><img src="' + P(s.n, 1) + '" alt="غلاف العدد ' + ar(s.n) + ': ' + s.t + '" width="800" height="1135" loading="' + (i < 2 ? 'eager' : 'lazy') + '" decoding="async"><span class="word">' + s.word + '</span><span class="starburst"><b>العدد ' + ar(s.n) + '</b></span><span class="stamp-done' + (state.stickers.indexOf(s.n) >= 0 ? ' on' : '') + '">خلّصتها!</span></div>' +
       '<h3>' + s.t + '</h3><p class="blurb">' + s.b + '</p><p class="note">' + s.note + '</p><a class="btn col" data-go href="/story-' + s.n + '">اقرا القصة ←</a></article>';
   }).join('');
+  var used = {}; stories.forEach(function (s) { s.chars.forEach(function (k) { used[k] = 1; }); });
+  var chips = TEAM.filter(function (k) { return used[k]; }).map(function (k) { var c = CHARS[k]; return '<button type="button" class="fchip" data-char="' + k + '" aria-pressed="false">' + (c.img ? '<img src="/assets/' + c.img + '.jpg" alt="" width="36" height="36" loading="lazy">' : '<i>' + c.n.charAt(0) + '</i>') + '<span>' + c.n + '</span></button>'; }).join('');
+  var fbar = '<div class="fbar paper"><label class="fsearch"><span aria-hidden="true">🔍</span><input id="fq" type="search" placeholder="دوّر على شخصية..." autocomplete="off" aria-label="بحث بالشخصية"></label><div class="fchips">' + chips + '</div></div><p class="fempty" id="fempty" hidden>مفيش قصة بالشخصية دي لسه... 🤔</p>';
   var album = '<div class="album paper tape"><div class="slots">' + stories.map(function (s) {
     var got = state.stickers.indexOf(s.n) >= 0;
     return '<div class="slot' + (got ? ' got' : '') + '" style="--c:' + s.c + '"><div class="disc">' + (got ? '<img src="' + H(s.hero) + '" alt="ستيكر ' + s.hname + '">' : '؟') + '</div>العدد ' + ar(s.n) + '</div>';
-  }).join('') + '</div><div class="prog" id="prog">جمّعت ' + ar(state.stickers.length) + ' من ٥ ستيكرات</div></div><div id="certbox"></div>';
+  }).join('') + '</div><div class="prog" id="prog">جمّعت ' + ar(state.stickers.length) + ' من ' + ar(stories.length) + ' ستيكر</div></div><div id="certbox"></div>';
   var hs = heroes.map(function (h) {
     return '<button type="button" class="hc" data-hc style="--c:' + h.c + '" aria-label="' + h.n + ': ' + h.say + '"><span class="rays"></span><span class="bubble">' + h.say + '</span><img class="himg" src="' + H(h.k) + '" alt="' + h.n + '" width="560" height="747" loading="lazy" decoding="async"><span class="hname">' + h.n + '</span><span class="chip">🎂 ' + h.age + '</span><span class="chip">⚡ ' + h.pw + '</span></button>';
   }).join('');
@@ -198,7 +235,7 @@ function homeHTML() {
   var six = '<div class="six"><div class="rays6"></div><h2>العدد ٦... قريبًا!</h2>' + sil + '<p>شرير جديد جاي للمدينة... مين يكون؟ اختاروا انتو!</p><div class="votes">' + vc + '</div><p class="stat" id="vstat" style="color:#d8cdb4;font-size:16px;margin-top:16px"></p></div>';
   var ios = /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.navigator.standalone ? '<div class="ios">دوس مشاركة ← أضف للشاشة الرئيسية</div>' : '';
   return hero +
-    sec('index', 'الفهرس', RED, '', '<div class="cards">' + cards + '</div>') +
+    sec('index', 'الفهرس', RED, '', fbar + '<div class="cards">' + cards + '</div>') +
     sec('album', 'ألبوم الستيكرات', ORG, 'اقرا القصة وجاوب على السؤال... وجمّع كل الستيكرات!', album) +
     sec('heroes', 'تعرّف على الأبطال', GRN, 'دوس على البطل وشوف هيقول إيه!', '<div class="heroes">' + hs + '</div>') +
     sec('villains', 'ملفات الأشرار', RED, 'اعرف عدوك! قوته إيه... ونقطة ضعفه فين.', '<div class="wanted-grid">' + vs + '</div>') +
@@ -211,9 +248,26 @@ function homeHTML() {
 }
 
 /* ---------- certificate ---------- */
+function initFilter() {
+  var q = $('#fq'); if (!q) return;
+  var sel = {};
+  var cards = $$('.card[data-chars]');
+  function apply() {
+    var t = normAr(q.value), shown = 0;
+    cards.forEach(function (c) {
+      var cs = c.getAttribute('data-chars').split(' ');
+      var okSel = Object.keys(sel).every(function (k) { return cs.indexOf(k) >= 0; });
+      var okQ = !t || c.getAttribute('data-q').indexOf(t) >= 0;
+      var ok = okSel && okQ; c.hidden = !ok; if (ok) { shown++; c.classList.add('in'); }
+    });
+    $('#fempty').hidden = shown > 0;
+  }
+  q.oninput = apply;
+  $$('.fchip').forEach(function (b) { b.onclick = function () { var k = b.getAttribute('data-char'); var was = !!sel[k]; sel = {}; if (!was) sel[k] = 1; $$('.fchip').forEach(function (x) { var on = !!sel[x.getAttribute('data-char')]; x.classList.toggle('on', on); x.setAttribute('aria-pressed', on); }); apply(); }; });
+}
 function renderCert() {
   var box = $('#certbox'); if (!box) return;
-  if (state.stickers.length < 5) { box.innerHTML = ''; return; }
+  if (state.stickers.length < stories.length) { box.innerHTML = ''; return; }
   box.innerHTML = '<div class="cert tape"><div class="cert-in"><h3>شهادة رسمية</h3><p>نشهد إن البطل</p><input id="cname" maxlength="20" placeholder="اكتب اسمك" value="' + esc(state.name) + '" autocomplete="off"><p>بقى عضو رسمي في حراس المدينة!</p><div class="cglogo"><span class="cglogo-w">حراس</span><span class="cglogo-b">المدينة</span></div><button type="button" class="btn big" id="csave">حفظ الشهادة</button></div></div>';
   $('#cname').oninput = function (e) { state.name = e.target.value; save('name'); };
   $('#csave').onclick = function () {
@@ -246,7 +300,7 @@ function refreshAlbum(fresh) {
     el.className = 'slot' + (got ? ' got' : '') + (fresh === s.n ? ' fresh' : '');
     $('.disc', el).innerHTML = got ? '<img src="' + H(s.hero) + '" alt="ستيكر ' + s.hname + '">' : '؟';
   });
-  var p = $('#prog'); if (p) p.textContent = 'جمّعت ' + ar(state.stickers.length) + ' من ٥ ستيكرات';
+  var p = $('#prog'); if (p) p.textContent = 'جمّعت ' + ar(state.stickers.length) + ' من ' + ar(stories.length) + ' ستيكر';
   $$('.stamp-done').forEach(function (el, i) { el.classList.toggle('on', state.stickers.indexOf(i + 1) >= 0); });
   renderCert();
 }
@@ -468,12 +522,13 @@ function initReader(n) {
 function cleanup() { if (window.__key) { document.removeEventListener('keydown', window.__key); window.__key = null; } if (window.__vtimer) { clearInterval(window.__vtimer); window.__vtimer = null; } }
 function render() {
   cleanup();
-  var path = location.pathname.replace(/\/+$/, '') || '/', app = $('#app'), m = /^\/story-([1-5])$/.exec(path);
+  var path = location.pathname.replace(/\/+$/, '') || '/', app = $('#app'), m = /^\/story-(\d+)$/.exec(path); if (m && (+m[1] < 1 || +m[1] > stories.length)) m = null;
   if (m) { var n = +m[1]; app.innerHTML = readerHTML(n); document.title = 'العدد ' + ar(n) + ': ' + stories[n - 1].t + ' — الخارقون'; initReader(n); return; }
   document.title = 'الخارقون — حراس المدينة';
   app.innerHTML = homeHTML();
   $$('[data-scroll]').forEach(function (b) { b.onclick = function () { scrollToId(b.getAttribute('data-scroll')); }; });
   $$('.card').forEach(function (c, i) { reveal(c, 'in', 0); });
+  initFilter();
   $$('.wanted').forEach(function (c) { reveal(c, 'in', 150); });
   $$('[data-pop]').forEach(function (c) { var t; var on = function () { c.classList.add('pop'); clearTimeout(t); t = setTimeout(function () { c.classList.remove('pop'); }, 1100); }; c.addEventListener('pointerdown', on); c.addEventListener('mouseenter', on); });
   $$('[data-hc]').forEach(function (c) { var t; c.onclick = function () { c.classList.remove('on'); void c.offsetWidth; c.classList.add('on'); clearTimeout(t); t = setTimeout(function () { c.classList.remove('on'); }, 2800); }; });
