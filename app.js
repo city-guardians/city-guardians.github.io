@@ -232,7 +232,7 @@ function homeHTML() {
   var video = '<div class="polaroid"><video controls playsinline preload="metadata" poster="/assets/poster.jpg" width="960" height="540"><source src="/assets/intro.mp4" type="video/mp4"></video><div class="cap">إنترو حراس المدينة</div></div><div class="vtxt"><h2>الإنترو!</h2><div class="arrow">← شغّلوا الصوت!</div><p>الأبطال الأربعة بيدخلوا واحد ورا التاني.</p><a class="btn big col" style="--c:' + ORG + '" data-go href="/story-5">اقرا القصة الكبيرة</a></div>';
   var sil = '<svg class="sil" viewBox="0 0 120 160" aria-hidden="true"><path d="M60 8c-20 0-30 16-30 34 0 12 5 20 10 25-18 6-30 20-30 40v53h100v-53c0-20-12-34-30-40 5-5 10-13 10-25C90 24 80 8 60 8z" fill="#000" stroke="#555" stroke-width="3"/><text x="60" y="88" text-anchor="middle" font-family="Lalezar" font-size="70" fill="#ffcc1a">؟</text></svg>';
   var vc = candidates.map(function (c, i) { return '<button type="button" class="vc" data-vote="' + c.k + '" style="--c:' + c.c + ';--rot:' + [-1.5, 1.2, -.8][i] + 'deg"><h4>' + c.n + '</h4><span>' + c.d + '</span><span class="pct" data-pct="' + c.k + '"></span><span class="bar"><i data-bar="' + c.k + '"></i></span></button>'; }).join('');
-  var six = '<div class="six"><div class="rays6"></div><h2>العدد ٦... قريبًا!</h2>' + sil + '<p>شرير جديد جاي للمدينة... مين يكون؟ اختاروا انتو!</p><div class="votes">' + vc + '</div><p class="stat" id="vstat" style="color:#d8cdb4;font-size:16px;margin-top:16px"></p></div>';
+  var six = '<div class="six"><div class="rays6"></div><h2>العدد ' + ar(stories.length + 1) + '... قريبًا!</h2>' + sil + '<p>مغامرة جديدة جاية للخارقين... وخطر جديد في المدينة! استنونا.</p></div>';
   var ios = /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.navigator.standalone ? '<div class="ios">دوس مشاركة ← أضف للشاشة الرئيسية</div>' : '';
   return hero +
     sec('index', 'الفهرس', RED, '', fbar + '<div class="cards">' + cards + '</div>') +
@@ -443,6 +443,7 @@ function initDrawings() {
 
 /* ---------- vote ---------- */
 function initVote() {
+  if (!$('#vstat')) return;
   var tally = null, stat = $('#vstat');
   function paint() {
     var tot = tally ? (tally.m + tally.b + tally.f) : 0;
