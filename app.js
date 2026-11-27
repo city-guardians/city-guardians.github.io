@@ -572,6 +572,17 @@ render();
 var ld = $('#loading'); function hideLoad() { ld.classList.add('done'); setTimeout(function () { ld.remove(); }, 500); }
 (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(function () { setTimeout(hideLoad, 250); });
 setTimeout(hideLoad, 2500);
-if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0) window.addEventListener('load', function () { navigator.serviceWorker.getRegistration('/').then(function (r) { if (!r) return navigator.serviceWorker.register('/sw.js'); if (r.update) r.update().catch(function () {}); }).catch(function () {}); });
+/* auto-update: always re-check the worker, and reload once when a new worker takes over */
+if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0) {
+  var hadCtl = !!navigator.serviceWorker.controller, reloaded = false;
+  navigator.serviceWorker.addEventListener('controllerchange', function () { if (!hadCtl || reloaded) return; reloaded = true; location.reload(); });
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.getRegistration('/').then(function (r) {
+      if (!r) return navigator.serviceWorker.register('/sw.js', { updateViaCache: 'none' });
+      r.update().catch(function () {});
+      document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible') r.update().catch(function () {}); });
+    }).catch(function () {});
+  });
+}
 window.addEventListener('load', function () { setTimeout(function () { var s = document.createElement('script'); s.src = '/push.js'; s.async = true; document.body.appendChild(s); }, 1500); });
 })();

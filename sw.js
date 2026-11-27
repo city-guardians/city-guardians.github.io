@@ -1,5 +1,5 @@
 try { importScripts('https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.sw.js'); } catch (e) {}
-const V = 'kh-v18';
+const V = 'kh-v19';
 const CORE = ['/', '/index.html', '/style.css', '/app.js', '/config.js', '/manifest.webmanifest', '/assets/fonts/fonts.css', '/assets/poster.jpg'];
 self.addEventListener('install', (e) => { e.waitUntil(caches.open(V).then((c) => c.addAll(CORE)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', (e) => { e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k !== V).map((k) => caches.delete(k)))).then(() => self.clients.claim())); });
@@ -7,11 +7,11 @@ self.addEventListener('fetch', (e) => {
   const r = e.request; const u = new URL(r.url);
   if (r.method !== 'GET' || u.origin !== location.origin || r.headers.has('range')) return;
   if (r.mode === 'navigate') {
-    e.respondWith(fetch(r).then((res) => { const cp = res.clone(); caches.open(V).then((c) => c.put('/index.html', cp)); return res; }).catch(() => caches.match('/index.html')));
+    e.respondWith(fetch(r.url, { cache: 'no-cache', credentials: 'same-origin' }).then((res) => { if (res.ok) { const cp = res.clone(); caches.open(V).then((c) => c.put('/index.html', cp)); } return res; }).catch(() => caches.match('/index.html')));
     return;
   }
   if (/\.(js|css|webmanifest)$/.test(u.pathname)) {
-    e.respondWith(fetch(r).then((res) => { if (res.ok) { const cp = res.clone(); caches.open(V).then((c) => c.put(r, cp)); } return res; }).catch(() => caches.match(r)));
+    e.respondWith(fetch(r.url, { cache: 'no-cache', credentials: 'same-origin' }).then((res) => { if (res.ok) { const cp = res.clone(); caches.open(V).then((c) => c.put(r, cp)); } return res; }).catch(() => caches.match(r)));
     return;
   }
   e.respondWith(caches.match(r).then((hit) => hit || fetch(r).then((res) => { if (res.ok) { const cp = res.clone(); caches.open(V).then((c) => c.put(r, cp)); } return res; })));
