@@ -216,7 +216,7 @@ function homeHTML() {
     return '<div class="slot' + (got ? ' got' : '') + '" style="--c:' + s.c + '"><div class="disc">' + (got ? '<img src="' + H(s.hero) + '" alt="ستيكر ' + s.hname + '">' : '؟') + '</div>العدد ' + ar(s.n) + '</div>';
   }).join('') + '</div><div class="prog" id="prog">جمّعت ' + ar(state.stickers.length) + ' من ' + ar(stories.length) + ' ستيكر</div></div><div id="certbox"></div>';
   var hs = heroes.map(function (h) {
-    return '<button type="button" class="hc" data-hc style="--c:' + h.c + '" aria-label="' + h.n + ': ' + h.say + '"><span class="rays"></span><span class="bubble">' + h.say + '</span><img class="himg" src="' + H(h.k) + '" alt="' + h.n + '" width="560" height="747" loading="lazy" decoding="async"><span class="hname">' + h.n + '</span><span class="chip">🎂 ' + h.age + '</span><span class="chip">⚡ ' + h.pw + '</span></button>';
+    return '<button type="button" class="hc" data-hc style="--c:' + h.c + '" aria-label="' + h.n + ': ' + h.say + '"><span class="rays"></span><span class="bubble">' + h.say + '</span><img class="himg" src="' + H(h.k) + '" alt="' + h.n + '" width="560" height="747" loading="lazy" decoding="async"><span class="hname">' + h.n + '</span><span class="chip">⚡ ' + h.pw + '</span></button>';
   }).join('');
   var vs = villains.map(function (v) {
     return '<article class="wanted"style="--rot:' + v.rot + 'deg"><h3>مطلوب!</h3><div class="pic"><img src="/assets/' + v.img + '.jpg" alt="' + v.n + '" loading="lazy" decoding="async"><span class="vstamp ' + (v.g ? 'g' : 'r') + '">' + v.st + '</span></div><h4>' + v.n + '</h4>' +
