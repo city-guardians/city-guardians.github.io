@@ -46,12 +46,14 @@ var stories = [
   { n: 14, t: 'الخارقون والضيف الفضائي', b: 'سفينة فضاء نزلت في الجنينة وطلع منها ضيف صغير تلات عيون... الخارقون هيساعدوه يرجع لأهله!', note: 'مش لازم يشبهنا!', word: 'بوووووم!', c: ORG, hero: 'hamoza', hname: 'الفريق',
     q: 'بيبو جه منين؟', a: ['من البحر', 'من الغابة', 'من الفضاء'], ok: 2 },
   { n: 15, t: 'الخارقون: اختبار القائد', b: 'الأشرار اتجمعوا ومسكوا حموزي القائد... دلوقتي دور التلاتة الصغيرين يثبتوا إن القائد قلب وفكرة!', note: 'القائد عنده فكرة وقلب!', word: 'تشاااك!', c: ORG, hero: 'hamoza', hname: 'الفريق',
-    q: 'مين اللي أنقذ حموزي القائد؟', a: ['التلاتة الصغيرين لوحدهم', 'البارون', 'الشرطة'], ok: 0 }
+    q: 'مين اللي أنقذ حموزي القائد؟', a: ['التلاتة الصغيرين لوحدهم', 'البارون', 'الشرطة'], ok: 0 },
+  { n: 16, t: 'سيد الزمن', pages: 7, pdf: '/assets/pdf/story16.pdf', b: 'مستر تيك توك لعب في الوقت والمدينة اتجننت! الخارقون الأربعة بيقابلوا بطل جديد غامض اسمه يودا... بس مين هو؟', note: 'الأبطال مش لوحدهم أبدًا!', word: 'تيك توك!', c: '#d9a521', hero: 'yoda', hname: 'يودا',
+    q: 'مين الأبطال اللي يودا بيحرس بوابتهم؟', a: ['أبطال تانيين في أزمنة تانية', 'ديناصورات', 'رواد فضاء'], ok: 0 }
 ];
 var CHARS = {
   sino: { n: 'سوبر سينو', img: 'sino' }, timo: { n: 'تيمو', img: 'timo' }, nono: { n: 'نونو', img: 'nono' }, hamoza: { n: 'حموزي', img: 'hamoza' },
   mega: { n: 'ميجا-بوت' }, frost: { n: 'دكتور صقيع' }, dragon: { n: 'تنين اللهب' }, baron: { n: 'البارون رمادي' },
-  magnet: { n: 'مستر مغناطيس' }, bubble: { n: 'ملكة الفقاعات' }, fog: { n: 'كابتن ضباب' }, dino: { n: 'دينو' }, dinomama: { n: 'ماما ديناصور' }, puppy: { n: 'الكلب الصغير' },
+  yoda: { n: 'يودا' }, ticktock: { n: 'مستر تيك توك' }, magnet: { n: 'مستر مغناطيس' }, bubble: { n: 'ملكة الفقاعات' }, fog: { n: 'كابتن ضباب' }, dino: { n: 'دينو' }, dinomama: { n: 'ماما ديناصور' }, puppy: { n: 'الكلب الصغير' },
   driver: { n: 'سواق الأتوبيس' }, kids: { n: 'أطفال المدرسة' }, shanab: { n: 'القبطان شنب' }, pirates: { n: 'القراصنة والببغاء' }, dolphin: { n: 'الدلفين' }, turtles: { n: 'السلاحف' },
   sandking: { n: 'ملك الرمل' }, girl: { n: 'بنت القرية' }, zemblek: { n: 'عم زمبلك' }, toys: { n: 'جيش اللعب' }, bibo: { n: 'بيبو' }, biboFam: { n: 'أهل بيبو' }
   /* only the 4 heroes get filter chips; other names are searchable via the search box */
@@ -59,7 +61,7 @@ var CHARS = {
 var TEAM = ['sino', 'timo', 'nono', 'hamoza'];
 var STORY_CHARS = { 1: ['sino', 'mega'], 2: ['timo', 'frost'], 3: ['nono', 'dragon'], 4: ['hamoza', 'nono', 'baron'], 5: TEAM.concat(['baron', 'frost', 'dragon']),
   6: ['sino', 'magnet'], 7: ['sino', 'dino', 'dinomama'], 8: ['sino', 'bubble'], 9: TEAM.concat(['puppy']), 10: ['timo', 'fog', 'driver', 'kids'], 11: ['nono', 'shanab', 'pirates', 'dolphin', 'turtles'],
-  12: ['hamoza', 'sandking', 'girl'], 13: TEAM.concat(['zemblek', 'toys']), 14: TEAM.concat(['bibo', 'biboFam']), 15: TEAM.concat(['baron', 'frost', 'magnet']) };
+  12: ['hamoza', 'sandking', 'girl'], 13: TEAM.concat(['zemblek', 'toys']), 14: TEAM.concat(['bibo', 'biboFam']), 15: TEAM.concat(['baron', 'frost', 'magnet']), 16: TEAM.concat(['yoda', 'ticktock']) };
 stories.forEach(function (s) { s.chars = s.chars || STORY_CHARS[s.n] || []; });
 var normAr = function (s) { return String(s || '').toLowerCase().replace(/[\u064B-\u0652\u0640]/g, '').replace(/[أإآ]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه').replace(/[-\s]+/g, ' ').trim(); };
 var heroes = [
@@ -68,11 +70,13 @@ var heroes = [
   { k: 'nono', n: 'نونو', age: '٤ سنين', pw: 'بيتحكم في المايه', say: 'يا موج... تعالى معايا!', c: BLUE },
   { k: 'hamoza', n: 'حموزي الأخضر', age: '٩ سنين', pw: 'بيتحكم في الطبيعة', say: 'يلا يا خارقين!', c: GRN }
 ];
+var heroCards = heroes.concat([{ k: 'yoda', n: 'يودا', pw: 'حارس الزمن', say: 'الوقت... مش لعبة!', c: '#d9a521' }]);
 var villains = [
   { n: 'ميجا-بوت', img: 'v1', pw: 'ضخم وأقوى من مية عربية', weak: 'الشريحة الحمرا على ضهره', by: 'سوبر سينو', st: 'بقى صاحبنا!', g: 1, rot: -2 },
   { n: 'دكتور صقيع', img: 'v2', pw: 'بيجمّد أي حاجة في ثانية', weak: 'السرعة... والدفا', by: 'تيمو البرق', st: 'اتمسك!', g: 0, rot: 1.8 },
   { n: 'تنين اللهب', img: 'v3', pw: 'بيطلّع نار من بقه', weak: 'قلبه طيب', by: 'نونو... بالطيبة', st: 'بقى صاحبنا!', g: 1, rot: 2 },
-  { n: 'البارون رمادي', img: 'v4', pw: 'جيش خلاطات أسمنت', weak: 'الشجر والمايه مع بعض', by: 'الخارقين كلهم', st: 'اتمسك!', g: 0, rot: -1.6 }
+  { n: 'البارون رمادي', img: 'v4', pw: 'جيش خلاطات أسمنت', weak: 'الشجر والمايه مع بعض', by: 'الخارقين كلهم', st: 'اتمسك!', g: 0, rot: -1.6 },
+  { n: 'مستر تيك توك', img: 'v5', pw: 'بيلعب في الوقت ويلخبط الساعات', weak: 'لسه بنكتشفها...', by: 'لسه هربان!', st: 'لسه هربان!', g: 0, rot: 1.5 }
 ];
 var candidates = [
   { k: 'm', n: 'مستر مغناطيس', d: 'بيشد أي حاجة حديد في المدينة', c: RED },
@@ -215,7 +219,7 @@ function homeHTML() {
     var got = state.stickers.indexOf(s.n) >= 0;
     return '<div class="slot' + (got ? ' got' : '') + '" style="--c:' + s.c + '"><div class="disc">' + (got ? '<img src="' + H(s.hero) + '" alt="ستيكر ' + s.hname + '">' : '؟') + '</div>العدد ' + ar(s.n) + '</div>';
   }).join('') + '</div><div class="prog" id="prog">جمّعت ' + ar(state.stickers.length) + ' من ' + ar(stories.length) + ' ستيكر</div></div><div id="certbox"></div>';
-  var hs = heroes.map(function (h) {
+  var hs = heroCards.map(function (h) {
     return '<button type="button" class="hc" data-hc style="--c:' + h.c + '" aria-label="' + h.n + ': ' + h.say + '"><span class="rays"></span><span class="bubble">' + h.say + '</span><img class="himg" src="' + H(h.k) + '" alt="' + h.n + '" width="560" height="747" loading="lazy" decoding="async"><span class="hname">' + h.n + '</span><span class="chip">⚡ ' + h.pw + '</span></button>';
   }).join('');
   var vs = villains.map(function (v) {
@@ -470,27 +474,27 @@ function initVote() {
 /* ---------- reader ---------- */
 function readerHTML(n) {
   var s = stories[n - 1], nx = stories[n];
-  var slides = ''; for (var i = 1; i <= 6; i++) slides += '<section class="slide" style="--tilt:' + (i % 2 ? 2 : -2) + 'deg" aria-label="صفحة ' + ar(i) + '"><img src="' + P(n, i) + '" alt="العدد ' + ar(n) + ' صفحة ' + ar(i) + '" width="800" height="1135" loading="' + (i < 3 ? 'eager' : 'lazy') + '" decoding="async" draggable="false"></section>';
+  var NP = s.pages || 6, slides = ''; for (var i = 1; i <= NP; i++) slides += '<section class="slide" style="--tilt:' + (i % 2 ? 2 : -2) + 'deg" aria-label="صفحة ' + ar(i) + '"><img src="' + P(n, i) + '" alt="العدد ' + ar(n) + ' صفحة ' + ar(i) + '" width="800" height="1135" loading="' + (i < 3 ? 'eager' : 'lazy') + '" decoding="async" draggable="false"></section>';
   var answers = s.a.map(function (a, i) { return '<button type="button" data-a="' + i + '">' + a + '</button>'; }).join('');
   var end = '<section class="slide" style="--tilt:2deg"><div class="endcard long"><h2>النهاية!</h2><div class="q">' + s.q + '</div><div class="ans">' + answers + '</div><div class="fb" id="fb"></div><div id="gs"></div>' +
     (nx ? '<a class="nxt" data-go href="/story-' + nx.n + '"><img src="' + P(nx.n, 1) + '" alt="" loading="lazy"><span>القصة الجاية<br>العدد ' + ar(nx.n) + ': ' + nx.t + '</span></a><a class="btn big col" style="--c:' + nx.c + '" data-go href="/story-' + nx.n + '">القصة الجاية ⚡</a>' : '<p class="hand" style="font-size:24px">كمّلت كل المغامرات! الخارقون بيشكروك 🎉</p>') +
-    '<a class="btn cream" data-go data-after="album" href="/">الفهرس</a></div></section>';
-  return '<div class="reader" style="--c:' + s.c + '"><header class="bar-top"><a class="btn cream sm" data-go href="/">الفهرس</a><h1>العدد ' + ar(n) + ': ' + s.t + '</h1><span class="counter" id="cnt">١ / ٦</span></header>' +
+    (s.pdf ? '<a class="btn big col" style="--c:' + s.c + '" href="' + s.pdf + '" download="alkhaarikoon-story' + n + '.pdf">نزّل القصة PDF ⬇</a>' : '') + '<a class="btn cream" data-go data-after="album" href="/">الفهرس</a></div></section>';
+  return '<div class="reader" style="--c:' + s.c + '"><header class="bar-top"><a class="btn cream sm" data-go href="/">الفهرس</a><h1>العدد ' + ar(n) + ': ' + s.t + '</h1><span class="counter" id="cnt">١ / ' + ar(NP) + '</span></header>' +
     '<div class="stage"><div class="car" id="car" tabindex="0" aria-label="صفحات القصة">' + slides + end + '</div></div>' +
-    '<nav class="ctrl" aria-label="التنقل"><button type="button" class="btn cream" id="prev" aria-label="الصفحة السابقة">→</button><div class="dots" id="dots">' + Array(8).join('x').split('').map(function (_, i) { return '<button type="button" class="dot" data-d="' + i + '" aria-label="' + (i < 6 ? 'صفحة ' + ar(i + 1) : 'النهاية') + '"></button>'; }).join('') + '</div><button type="button" class="btn cream" id="next" aria-label="الصفحة التالية">←</button></nav></div>';
+    '<nav class="ctrl" aria-label="التنقل"><button type="button" class="btn cream" id="prev" aria-label="الصفحة السابقة">→</button><div class="dots" id="dots">' + Array(NP + 2).join('x').split('').map(function (_, i) { return '<button type="button" class="dot" data-d="' + i + '" aria-label="' + (i < NP ? 'صفحة ' + ar(i + 1) : 'النهاية') + '"></button>'; }).join('') + '</div><button type="button" class="btn cream" id="next" aria-label="الصفحة التالية">←</button></nav></div>';
 }
 function initReader(n) {
-  var s = stories[n - 1], car = $('#car'), slides = $$('.slide', car), active = 0;
+  var s = stories[n - 1], NP = s.pages || 6, car = $('#car'), slides = $$('.slide', car), active = 0;
   state.last = n; save('last');
   function set(i) {
     active = i;
     slides.forEach(function (el, k) { var d = Math.abs(k - i); el.classList.toggle('cur', d === 0); el.classList.toggle('d2', d > 1); });
     $$('.dot').forEach(function (b, k) { b.classList.toggle('on', k === i); });
-    $('#cnt').textContent = i < 6 ? ar(i + 1) + ' / ٦' : 'النهاية';
-    $('#prev').disabled = i === 0; $('#next').disabled = i === 6;
+    $('#cnt').textContent = i < NP ? ar(i + 1) + ' / ' + ar(NP) : 'النهاية';
+    $('#prev').disabled = i === 0; $('#next').disabled = i === NP;
     var nx = slides[i + 1]; if (nx) { var im = $('img', nx); if (im) { im.loading = 'eager'; var pre = new Image(); pre.src = im.src; } }
   }
-  function goTo(i) { i = Math.max(0, Math.min(6, i)); slides[i].scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', inline: 'center', block: 'nearest' }); set(i); }
+  function goTo(i) { i = Math.max(0, Math.min(NP, i)); slides[i].scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', inline: 'center', block: 'nearest' }); set(i); }
   var raf = 0;
   car.addEventListener('scroll', function () {
     cancelAnimationFrame(raf); raf = requestAnimationFrame(function () {
