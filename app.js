@@ -157,7 +157,16 @@ var state = {
   last: store.get('last', 1),
   name: store.get('name', ''),
   design: store.get('design', { suit: RED, power: 0, name: '' }),
-  vote: store.get('vote', null)
+  vote: store.get('vote', null),
+  picks: store.get('picks', {})
+}
+/* team stories: sticker shows a random hero, fixed per user after first pick */
+var TEAM_STORIES = [5, 13, 14, 15], TEAM_HEROES = ['sino', 'timo', 'nono', 'hamoza'];
+function stickerHero(s) {
+  if (TEAM_STORIES.indexOf(s.n) < 0) return s.hero;
+  var p = state.picks[s.n];
+  if (TEAM_HEROES.indexOf(p) < 0) { p = TEAM_HEROES[Math.floor(Math.random() * TEAM_HEROES.length)]; state.picks[s.n] = p; store.set('picks', state.picks); }
+  return p;
 };
 function save(k) { store.set(k, state[k]); }
 
@@ -217,7 +226,7 @@ function homeHTML() {
   var fbar = '<div class="fbar paper"><label class="fsearch"><span aria-hidden="true">🔍</span><input id="fq" type="search" placeholder="دوّر على شخصية..." autocomplete="off" aria-label="بحث بالشخصية"></label><div class="fchips">' + chips + '</div></div><p class="fempty" id="fempty" hidden>مفيش قصة بالشخصية دي لسه... 🤔</p>';
   var album = '<div class="album paper tape"><div class="slots">' + stories.map(function (s) {
     var got = state.stickers.indexOf(s.n) >= 0;
-    return '<div class="slot' + (got ? ' got' : '') + '" style="--c:' + s.c + '"><div class="disc">' + (got ? '<img src="' + H(s.hero) + '" alt="ستيكر ' + s.hname + '">' : '؟') + '</div>العدد ' + ar(s.n) + '</div>';
+    return '<div class="slot' + (got ? ' got' : '') + '" style="--c:' + s.c + '"><div class="disc">' + (got ? '<img src="' + H(stickerHero(s)) + '" alt="ستيكر ' + s.hname + '">' : '؟') + '</div>العدد ' + ar(s.n) + '</div>';
   }).join('') + '</div><div class="prog" id="prog">جمّعت ' + ar(state.stickers.length) + ' من ' + ar(stories.length) + ' ستيكر</div></div><div id="certbox"></div>';
   var hs = heroCards.map(function (h) {
     return '<button type="button" class="hc" data-hc style="--c:' + h.c + '" aria-label="' + h.n + ': ' + h.say + '"><span class="rays"></span><span class="bubble">' + h.say + '</span><img class="himg" src="' + H(h.k) + '" alt="' + h.n + '" width="560" height="747" loading="lazy" decoding="async"><span class="hname">' + h.n + '</span><span class="chip">⚡ ' + h.pw + '</span></button>';
@@ -302,7 +311,7 @@ function refreshAlbum(fresh) {
   $$('.slot').forEach(function (el, i) {
     var s = stories[i], got = state.stickers.indexOf(s.n) >= 0;
     el.className = 'slot' + (got ? ' got' : '') + (fresh === s.n ? ' fresh' : '');
-    $('.disc', el).innerHTML = got ? '<img src="' + H(s.hero) + '" alt="ستيكر ' + s.hname + '">' : '؟';
+    $('.disc', el).innerHTML = got ? '<img src="' + H(stickerHero(s)) + '" alt="ستيكر ' + s.hname + '">' : '؟';
   });
   var p = $('#prog'); if (p) p.textContent = 'جمّعت ' + ar(state.stickers.length) + ' من ' + ar(stories.length) + ' ستيكر';
   $$('.stamp-done').forEach(function (el, i) { el.classList.toggle('on', state.stickers.indexOf(i + 1) >= 0); });
@@ -365,44 +374,55 @@ function initDesigner() {
 var colorState = { hero: 'sino', color: '#d7261e', undo: [] };
 function initColoring() {
   var cv = $('#canv'), cx = cv.getContext('2d', { willReadFrequently: true });
-  var img = new Image();
+  var img = new Image(), fl = document.createElement('canvas'), fx = fl.getContext('2d', { willReadFrequently: true }), wallMap = null;
+  function redraw() { cx.globalCompositeOperation = 'source-over'; cx.fillStyle = '#fff'; cx.fillRect(0, 0, cv.width, cv.height); cx.drawImage(fl, 0, 0); cx.globalCompositeOperation = 'multiply'; cx.drawImage(img, 0, 0); cx.globalCompositeOperation = 'source-over'; }
   function load(k) {
     colorState.hero = k; colorState.undo = [];
     $$('[data-ch]').forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-ch') === k); });
-    img.onload = function () { cv.width = img.width; cv.height = img.height; cx.fillStyle = '#fff'; cx.fillRect(0, 0, cv.width, cv.height); cx.drawImage(img, 0, 0); };
-    img.src = '/assets/line-' + k + '.png';
+    var im = new Image();
+    im.onload = function () {
+      img = im; cv.width = fl.width = im.width; cv.height = fl.height = im.height;
+      fx.fillStyle = '#fff'; fx.fillRect(0, 0, fl.width, fl.height);
+      var t = document.createElement('canvas'); t.width = im.width; t.height = im.height; var tx = t.getContext('2d'); tx.drawImage(im, 0, 0);
+      var d = tx.getImageData(0, 0, t.width, t.height).data; wallMap = new Uint8Array(t.width * t.height);
+      for (var i = 0; i < wallMap.length; i++) wallMap[i] = d[i * 4] < 200 ? 1 : 0;
+      redraw();
+    };
+    im.src = '/assets/line2-' + k + '.png';
   }
   $$('[data-ch]').forEach(function (b) { b.onclick = function () { load(b.getAttribute('data-ch')); }; });
   $$('[data-cr]').forEach(function (b) { b.onclick = function () { colorState.color = b.getAttribute('data-cr'); $$('[data-cr]').forEach(function (o) { o.classList.toggle('on', o === b); }); }; });
   $('[data-cr]').classList.add('on');
   function hex(c) { return [parseInt(c.substr(1, 2), 16), parseInt(c.substr(3, 2), 16), parseInt(c.substr(5, 2), 16)]; }
   function fill(px, py) {
-    var w = cv.width, h = cv.height, id = cx.getImageData(0, 0, w, h), d = id.data;
-    var wall = function (i) { return d[i] < 120 && d[i + 1] < 120 && d[i + 2] < 120; };
-    var i0 = (py * w + px) * 4; if (wall(i0)) return;
-    var t0 = [d[i0], d[i0 + 1], d[i0 + 2]], rgb = hex(colorState.color);
-    if (Math.abs(t0[0] - rgb[0]) + Math.abs(t0[1] - rgb[1]) + Math.abs(t0[2] - rgb[2]) < 6) return;
-    colorState.undo.push(cx.getImageData(0, 0, w, h)); if (colorState.undo.length > 15) colorState.undo.shift();
-    var same = function (i) { return !wall(i) && Math.abs(d[i] - t0[0]) + Math.abs(d[i + 1] - t0[1]) + Math.abs(d[i + 2] - t0[2]) < 40; };
-    var stack = [px, py];
-    while (stack.length) {
-      var y = stack.pop(), x = stack.pop(); var i = (y * w + x) * 4;
-      while (x >= 0 && same(i)) { x--; i -= 4; } x++; i += 4;
-      var up = false, dn = false;
-      while (x < w && same(i)) {
-        d[i] = rgb[0]; d[i + 1] = rgb[1]; d[i + 2] = rgb[2];
-        if (y > 0) { var iu = i - w * 4; if (same(iu)) { if (!up) { stack.push(x, y - 1); up = true; } } else up = false; }
-        if (y < h - 1) { var idn = i + w * 4; if (same(idn)) { if (!dn) { stack.push(x, y + 1); dn = true; } } else dn = false; }
-        x++; i += 4;
-      }
+    if (!wallMap) return;
+    var w = fl.width, h = fl.height;
+    if (wallMap[py * w + px]) { /* tapped on a line: use nearest open pixel */
+      var found = -1; for (var r = 1; r <= 6 && found < 0; r++) for (var dy = -r; dy <= r && found < 0; dy++) for (var dx = -r; dx <= r; dx++) { var X = px + dx, Y = py + dy; if (X >= 0 && Y >= 0 && X < w && Y < h && !wallMap[Y * w + X]) { found = Y * w + X; break; } }
+      if (found < 0) return; px = found % w; py = (found - px) / w;
     }
-    cx.putImageData(id, 0, 0);
+    var id = fx.getImageData(0, 0, w, h), d = id.data, rgb = hex(colorState.color), i0 = (py * w + px) * 4;
+    if (d[i0] === rgb[0] && d[i0 + 1] === rgb[1] && d[i0 + 2] === rgb[2]) return;
+    var t0 = [d[i0], d[i0 + 1], d[i0 + 2]];
+    colorState.undo.push(fx.getImageData(0, 0, w, h)); if (colorState.undo.length > 15) colorState.undo.shift();
+    var seen = new Uint8Array(w * h), stack = [px, py], region = [];
+    while (stack.length) {
+      var y = stack.pop(), x = stack.pop(), p = y * w + x;
+      if (x < 0 || y < 0 || x >= w || y >= h || seen[p] || wallMap[p]) continue;
+      seen[p] = 1; region.push(p);
+      stack.push(x + 1, y, x - 1, y, x, y + 1, x, y - 1);
+    }
+    for (var j = 0; j < region.length; j++) {
+      var q = region[j], x2 = q % w, y2 = (q - x2) / w;
+      for (var oy = -3; oy <= 3; oy++) for (var ox = -3; ox <= 3; ox++) { var X2 = x2 + ox, Y2 = y2 + oy; if (X2 >= 0 && Y2 >= 0 && X2 < w && Y2 < h) { var qq = Y2 * w + X2; if (qq === q || wallMap[qq]) { var k4 = qq * 4; d[k4] = rgb[0]; d[k4 + 1] = rgb[1]; d[k4 + 2] = rgb[2]; } } }
+    }
+    fx.putImageData(id, 0, 0); redraw();
   }
   cv.addEventListener('click', function (e) {
     var r = cv.getBoundingClientRect();
     fill(Math.max(0, Math.min(cv.width - 1, Math.floor((e.clientX - r.left) * cv.width / r.width))), Math.max(0, Math.min(cv.height - 1, Math.floor((e.clientY - r.top) * cv.height / r.height))));
   });
-  $('#cundo').onclick = function () { var u = colorState.undo.pop(); if (u) cx.putImageData(u, 0, 0); };
+  $('#cundo').onclick = function () { var u = colorState.undo.pop(); if (u) { fx.putImageData(u, 0, 0); redraw(); } };
   $('#cclear').onclick = function () { load(colorState.hero); };
   $('#cdone').onclick = function () { showImage(cv.toDataURL('image/png'), 'تلوين-' + colorState.hero + '.png'); };
   $('#cprint').onclick = function () { var pa = $('#print-area'); pa.innerHTML = '<img alt="" src="' + cv.toDataURL('image/png') + '">'; setTimeout(function () { try { window.print(); } catch (e) {} }, 150); };
@@ -510,7 +530,7 @@ function initReader(n) {
   document.addEventListener('keydown', window.__key);
   // quiz
   var done = state.stickers.indexOf(n) >= 0;
-  function showSticker() { $('#gs').innerHTML = '<div class="got-sticker"><img src="' + H(s.hero) + '" alt=""><span>كسبت ستيكر ' + s.hname + '!</span></div>'; }
+  function showSticker() { $('#gs').innerHTML = '<div class="got-sticker"><img src="' + H(stickerHero(s)) + '" alt=""><span>كسبت ستيكر ' + s.hname + '!</span></div>'; }
   if (done) { $$('[data-a]').forEach(function (b) { if (+b.getAttribute('data-a') === s.ok) b.classList.add('right'); }); $('#fb').textContent = 'برافو عليك!'; showSticker(); }
   $$('[data-a]').forEach(function (b) { b.onclick = function () {
     var i = +b.getAttribute('data-a');
