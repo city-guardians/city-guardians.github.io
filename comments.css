@@ -1,0 +1,30 @@
+/* تعليقات الجمهور — comments section styles */
+.cmts-sec h2 { text-align: center; font-size: clamp(34px, 9vw, 52px); line-height: 1.3; color: var(--ink); }
+.cmts { max-width: 620px; margin: 0 auto; padding: 18px 14px 14px; position: relative; }
+.cmts-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+.cmts-stat { text-align: center; font-weight: 700; color: #5a4a36; margin: 6px 0; }
+.cmt { background: #fff; border: 3px solid var(--ink); border-radius: 16px 16px 16px 4px; padding: 10px 14px; box-shadow: 3px 4px 0 rgba(27,23,18,.8); position: relative; }
+.cmt:nth-child(even) { border-radius: 16px 16px 4px 16px; transform: rotate(.6deg); }
+.cmt:nth-child(odd) { transform: rotate(-.5deg); }
+.cmt.pending { background: #fff6d8; border-style: dashed; }
+.cmt-h { display: flex; align-items: baseline; gap: 8px; }
+.cmt-h b { color: var(--red); font-size: 18px; }
+.cmt-w { color: #8a7a63; font-size: 13px; font-weight: 700; }
+.cmt-b { margin: 4px 0 0; font-size: 17px; line-height: 1.7; word-break: break-word; }
+.cmt-src { font-size: 13px; font-weight: 900; color: #2a7fd4; margin: 8px 0 -6px; }
+.cmt-adm { display: flex; gap: 8px; margin-top: 8px; }
+.cmt-adm .btn { min-height: 40px; padding: 2px 14px; font-size: 15px; }
+.cmts-form { display: flex; flex-direction: column; gap: 10px; border-top: 3px dashed rgba(27,23,18,.35); padding-top: 16px; }
+.cmts-form textarea.field { resize: vertical; min-height: 84px; font-size: 18px; line-height: 1.6; }
+.cmts-form .btn { align-self: flex-start; }
+.cmts-note { margin: 0; font-size: 14px; font-weight: 700; color: #8a7a63; }
+.cmts-msg { margin: 0; font-size: 15px; font-weight: 900; color: var(--red); min-height: 20px; }
+.cmt-gear { width: 30px; height: 30px; border-radius: 50%; border: 2px solid #b0a48c; background: transparent; font-size: 14px; line-height: 1; cursor: pointer; opacity: .5; vertical-align: middle; padding: 0; }
+.cmt-gear:hover, .cmt-gear:focus { opacity: 1; border-color: var(--ink); }
+.cmts-login[hidden], .cmts-pending[hidden] { display: none; }
+.cmts-login { display: flex; gap: 8px; align-items: center; margin-top: 12px; flex-wrap: wrap; }
+.cmts-login .field { flex: 1; min-width: 140px; min-height: 44px; font-size: 17px; }
+.cmts-login .btn { min-height: 44px; padding: 4px 16px; font-size: 16px; }
+.cmts-login .cmts-msg { width: 100%; }
+.cmts-pending { margin-top: 14px; border-top: 3px dashed rgba(27,23,18,.35); padding-top: 10px; display: flex; flex-direction: column; gap: 10px; }
+.cmts-pending h4 { margin: 0; color: var(--ink); font-size: 19px; }
