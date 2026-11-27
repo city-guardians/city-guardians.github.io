@@ -83,7 +83,7 @@ var candidates = [
   { k: 'b', n: 'ملكة الفقاعات', d: 'بتحبس الناس في فقاعات صابون', c: BLUE },
   { k: 'f', n: 'كابتن ضباب', d: 'بيخبّي المدينة في ضباب تقيل', c: '#6b7a86' }
 ];
-var P = function (n, i) { return '/assets/p/s' + n + '-' + i + '.jpg'; };
+var P = function (n, i) { return '/assets/p/s' + n + '-' + i + '.jpg' + (n === 16 && i === 6 ? '?v=2' : ''); };
 var T = function (n, i) { return '/assets/t/t' + n + '-' + i + '.jpg'; };
 var H = function (k) { return '/assets/' + k + '.jpg'; };
 var cfg = window.KH_CFG || {};
