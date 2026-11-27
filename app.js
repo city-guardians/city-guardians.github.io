@@ -47,7 +47,7 @@ var stories = [
     q: 'بيبو جه منين؟', a: ['من البحر', 'من الغابة', 'من الفضاء'], ok: 2 },
   { n: 15, t: 'الخارقون: اختبار القائد', b: 'الأشرار اتجمعوا ومسكوا حموزي القائد... دلوقتي دور التلاتة الصغيرين يثبتوا إن القائد قلب وفكرة!', note: 'القائد عنده فكرة وقلب!', word: 'تشاااك!', c: ORG, hero: 'hamoza', hname: 'الفريق',
     q: 'مين اللي أنقذ حموزي القائد؟', a: ['التلاتة الصغيرين لوحدهم', 'البارون', 'الشرطة'], ok: 0 },
-  { n: 16, t: 'سيد الزمن', pages: 7, b: 'مستر تيك توك لعب في الوقت والمدينة اتجننت! الخارقون الأربعة بيقابلوا بطل جديد غامض اسمه يودا... بس مين هو؟', note: 'الأبطال مش لوحدهم أبدًا!', word: 'تيك توك!', c: '#d9a521', hero: 'yoda', hname: 'يودا',
+  { n: 16, t: 'سيد الزمن', pages: 7, cover: '/assets/c16.jpg', b: 'مستر تيك توك لعب في الوقت والمدينة اتجننت! الخارقون الأربعة بيقابلوا بطل جديد غامض اسمه يودا... بس مين هو؟', note: 'الأبطال مش لوحدهم أبدًا!', word: 'تيك توك!', c: '#d9a521', hero: 'yoda', hname: 'يودا',
     q: 'مين الأبطال اللي يودا بيحرس بوابتهم؟', a: ['أبطال تانيين في أزمنة تانية', 'ديناصورات', 'رواد فضاء'], ok: 0 }
 ];
 var CHARS = {
@@ -209,7 +209,7 @@ function homeHTML() {
   var hero = '<header class="hero corkboard">' + posters + '<div class="hcard"><h1>الخارقون</h1><div class="torn">حراس المدينة</div><p class="tag">٤ أبطال صغيرين... و' + ar(stories.length) + ' مغامرة أكشن. اختار قصتك وابدأ!</p><div class="hbtns">' +
     '<a class="btn big" data-go href="/story-' + s.n + '">ابدأ القراءة ⚡</a><button type="button" class="btn cream" data-scroll="index">الفهرس</button><button type="button" class="btn cream" data-scroll="album">الستيكرات</button><button type="button" class="btn cream" data-scroll="color">لوّن</button></div></div></header>';
   var cards = stories.map(function (s, i) {
-    return '<article class="card" data-chars="' + s.chars.join(' ') + '" data-q="' + esc(normAr(s.t + ' ' + s.chars.map(function (k) { return CHARS[k].n; }).join(' '))) + '" style="--c:' + s.c + ';--rot:' + [-2.4, 1.8, -1.2, 2.3, -1.9][i % 5] + 'deg"><div class="cover" data-pop><img src="' + P(s.n, 1) + '" alt="غلاف العدد ' + ar(s.n) + ': ' + s.t + '" width="800" height="1135" loading="' + (i < 2 ? 'eager' : 'lazy') + '" decoding="async"><span class="word">' + s.word + '</span><span class="starburst"><b>العدد ' + ar(s.n) + '</b></span><span class="stamp-done' + (state.stickers.indexOf(s.n) >= 0 ? ' on' : '') + '">خلّصتها!</span></div>' +
+    return '<article class="card" data-chars="' + s.chars.join(' ') + '" data-q="' + esc(normAr(s.t + ' ' + s.chars.map(function (k) { return CHARS[k].n; }).join(' '))) + '" style="--c:' + s.c + ';--rot:' + [-2.4, 1.8, -1.2, 2.3, -1.9][i % 5] + 'deg"><div class="cover" data-pop><img src="' + (s.cover || P(s.n, 1)) + '" alt="غلاف العدد ' + ar(s.n) + ': ' + s.t + '" width="800" height="1135" loading="' + (i < 2 ? 'eager' : 'lazy') + '" decoding="async"><span class="word">' + s.word + '</span><span class="starburst"><b>العدد ' + ar(s.n) + '</b></span><span class="stamp-done' + (state.stickers.indexOf(s.n) >= 0 ? ' on' : '') + '">خلّصتها!</span></div>' +
       '<h3>' + s.t + '</h3><p class="blurb">' + s.b + '</p><p class="note">' + s.note + '</p><a class="btn col" data-go href="/story-' + s.n + '">اقرا القصة ←</a></article>';
   }).join('');
   var used = {}; stories.forEach(function (s) { s.chars.forEach(function (k) { used[k] = 1; }); });
@@ -477,7 +477,7 @@ function readerHTML(n) {
   var NP = s.pages || 6, slides = ''; for (var i = 1; i <= NP; i++) slides += '<section class="slide" style="--tilt:' + (i % 2 ? 2 : -2) + 'deg" aria-label="صفحة ' + ar(i) + '"><img src="' + P(n, i) + '" alt="العدد ' + ar(n) + ' صفحة ' + ar(i) + '" width="800" height="1135" loading="' + (i < 3 ? 'eager' : 'lazy') + '" decoding="async" draggable="false"></section>';
   var answers = s.a.map(function (a, i) { return '<button type="button" data-a="' + i + '">' + a + '</button>'; }).join('');
   var end = '<section class="slide" style="--tilt:2deg"><div class="endcard long"><h2>النهاية!</h2><div class="q">' + s.q + '</div><div class="ans">' + answers + '</div><div class="fb" id="fb"></div><div id="gs"></div>' +
-    (nx ? '<a class="nxt" data-go href="/story-' + nx.n + '"><img src="' + P(nx.n, 1) + '" alt="" loading="lazy"><span>القصة الجاية<br>العدد ' + ar(nx.n) + ': ' + nx.t + '</span></a><a class="btn big col" style="--c:' + nx.c + '" data-go href="/story-' + nx.n + '">القصة الجاية ⚡</a>' : '<p class="hand" style="font-size:24px">كمّلت كل المغامرات! الخارقون بيشكروك 🎉</p>') +
+    (nx ? '<a class="nxt" data-go href="/story-' + nx.n + '"><img src="' + (nx.cover || P(nx.n, 1)) + '" alt="" loading="lazy"><span>القصة الجاية<br>العدد ' + ar(nx.n) + ': ' + nx.t + '</span></a><a class="btn big col" style="--c:' + nx.c + '" data-go href="/story-' + nx.n + '">القصة الجاية ⚡</a>' : '<p class="hand" style="font-size:24px">كمّلت كل المغامرات! الخارقون بيشكروك 🎉</p>') +
     '<a class="btn cream" data-go data-after="album" href="/">الفهرس</a></div></section>';
   return '<div class="reader" style="--c:' + s.c + '"><header class="bar-top"><a class="btn cream sm" data-go href="/">الفهرس</a><h1>العدد ' + ar(n) + ': ' + s.t + '</h1><span class="counter" id="cnt">١ / ' + ar(NP) + '</span></header>' +
     '<div class="stage"><div class="car" id="car" tabindex="0" aria-label="صفحات القصة">' + slides + end + '</div></div>' +
